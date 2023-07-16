@@ -91,7 +91,7 @@ module.exports = context => {
           buildConfig = buildConfigs[configName];
           if (xcodeProject.getBuildProperty('SWIFT_OBJC_BRIDGING_HEADER', buildConfig.name) !== bridgingHeaderProperty) {
             xcodeProject.updateBuildProperty('SWIFT_OBJC_BRIDGING_HEADER', bridgingHeaderProperty, buildConfig.name);
-            console.log('Update IOS build setting SWIFT_OBJC_BRIDGING_HEADER to:', bridgingHeaderProperty, 'for build configuration', buildConfig.name);
+            // console.log('Update IOS build setting SWIFT_OBJC_BRIDGING_HEADER to:', bridgingHeaderProperty, 'for build configuration', buildConfig.name);
           }
         }
       }
@@ -113,7 +113,7 @@ module.exports = context => {
               content += '\n';
             }
             content += '#import "' + header + '"\n';
-            console.log('Importing', header, 'into', bridgingHeaderPath);
+            // console.log('Importing', header, 'into', bridgingHeaderPath);
           }
         });
         fs.writeFileSync(bridgingHeaderPath, content, 'utf-8');
@@ -123,37 +123,37 @@ module.exports = context => {
             buildConfig = buildConfigs[configName];
             if (parseFloat(xcodeProject.getBuildProperty('IPHONEOS_DEPLOYMENT_TARGET', buildConfig.name)) < parseFloat(IOS_MIN_DEPLOYMENT_TARGET)) {
               xcodeProject.updateBuildProperty('IPHONEOS_DEPLOYMENT_TARGET', IOS_MIN_DEPLOYMENT_TARGET, buildConfig.name);
-              console.log('Update IOS project deployment target to:', IOS_MIN_DEPLOYMENT_TARGET, 'for build configuration', buildConfig.name);
+              // console.log('Update IOS project deployment target to:', IOS_MIN_DEPLOYMENT_TARGET, 'for build configuration', buildConfig.name);
             }
 
             if (xcodeProject.getBuildProperty('ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES', buildConfig.name) !== 'YES') {
               xcodeProject.updateBuildProperty('ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES', 'YES', buildConfig.name);
-              console.log('Update IOS build setting ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES to: YES', 'for build configuration', buildConfig.name);
+              // console.log('Update IOS build setting ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES to: YES', 'for build configuration', buildConfig.name);
             }
 
             if (xcodeProject.getBuildProperty('LD_RUNPATH_SEARCH_PATHS', buildConfig.name) !== '"@executable_path/Frameworks"') {
               xcodeProject.updateBuildProperty('LD_RUNPATH_SEARCH_PATHS', '"@executable_path/Frameworks"', buildConfig.name);
-              console.log('Update IOS build setting LD_RUNPATH_SEARCH_PATHS to: @executable_path/Frameworks', 'for build configuration', buildConfig.name);
+              // console.log('Update IOS build setting LD_RUNPATH_SEARCH_PATHS to: @executable_path/Frameworks', 'for build configuration', buildConfig.name);
             }
 
             if (typeof xcodeProject.getBuildProperty('SWIFT_VERSION', buildConfig.name) === 'undefined') {
               if (config.getPreference('UseLegacySwiftLanguageVersion', 'ios')) {
                 xcodeProject.updateBuildProperty('SWIFT_VERSION', '2.3', buildConfig.name);
-                console.log('Use legacy Swift language version', buildConfig.name);
+                // console.log('Use legacy Swift language version', buildConfig.name);
               } else if (config.getPreference('UseSwiftLanguageVersion', 'ios')) {
                 const swiftVersion = config.getPreference('UseSwiftLanguageVersion', 'ios');
                 xcodeProject.updateBuildProperty('SWIFT_VERSION', swiftVersion, buildConfig.name);
-                console.log('Use Swift language version', swiftVersion);
+                // console.log('Use Swift language version', swiftVersion);
               } else {
                 xcodeProject.updateBuildProperty('SWIFT_VERSION', '5.0', buildConfig.name);
-                console.log('Update SWIFT version to 5.0', buildConfig.name);
+                // console.log('Update SWIFT version to 5.0', buildConfig.name);
               }
             }
 
             if (buildConfig.name === 'Debug') {
               if (xcodeProject.getBuildProperty('SWIFT_OPTIMIZATION_LEVEL', buildConfig.name) !== '"-Onone"') {
                 xcodeProject.updateBuildProperty('SWIFT_OPTIMIZATION_LEVEL', '"-Onone"', buildConfig.name);
-                console.log('Update IOS build setting SWIFT_OPTIMIZATION_LEVEL to: -Onone', 'for build configuration', buildConfig.name);
+                // console.log('Update IOS build setting SWIFT_OPTIMIZATION_LEVEL to: -Onone', 'for build configuration', buildConfig.name);
               }
             }
           }
@@ -205,7 +205,7 @@ const getPlatformVersionsFromFileSystem = (context, projectRoot) => {
       const version = result.replace(/\r?\n|\r/g, '');
       return { platform, version };
     }, (error) => {
-      console.log(error);
+      // console.log(error);
       process.exit(1);
     });
   });
