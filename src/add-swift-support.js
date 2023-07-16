@@ -7,7 +7,7 @@
 *    /!\ Please be sure not naming your bridging header file 'Bridging-Header.h'
 *    else it won't be supported.
 *
-*  - It puts the ios deployment target to 7.0 in case your project would have a
+*  - It puts the ios deployment target to 12.0 in case your project would have a
 *    lesser one.
 *
 *  - It updates the ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES build setting to YES.
@@ -31,7 +31,7 @@ module.exports = context => {
     (context.hook === 'after_prepare' && context.cmdLine.includes('prepare')) ||
     (context.hook === 'after_plugin_add' && context.cmdLine.includes('plugin add'))) {
     getPlatformVersionsFromFileSystem(context, projectRoot).then(platformVersions => {
-      const IOS_MIN_DEPLOYMENT_TARGET = '7.0';
+      const IOS_MIN_DEPLOYMENT_TARGET = '12.0';
       const platformPath = path.join(projectRoot, 'platforms', 'ios');
       const config = getConfigParser(context, path.join(projectRoot, 'config.xml'));
 
